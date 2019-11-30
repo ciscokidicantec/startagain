@@ -74,7 +74,6 @@ namespace startagain
 
                 myConnection.Open();
 
-
                 int RowsAffected = cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
