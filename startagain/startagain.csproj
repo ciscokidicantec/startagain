@@ -83,6 +83,7 @@
     <Compile Include="ini.aspx.designer.cs">
       <DependentUpon>ini.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MyDbConnections.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
-using System.Configuration;
 
 
 
@@ -22,8 +21,6 @@ namespace startagain
         protected void Button1_Click(object sender, EventArgs e)
         {
 
-            string connStr = ConfigurationManager.ConnectionStrings["estateporrtalConnectionString"].ConnectionString;
-            MySqlConnection myConnection = new MySqlConnection(connStr);
             MySql.Data.MySqlClient.MySqlCommand cmd;
 
             try
