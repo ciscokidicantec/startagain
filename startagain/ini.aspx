@@ -19,8 +19,9 @@
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
         </p>
         <p>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="imageindex" DataSourceID="SqlDataSource1">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="imageindex" DataSourceID="SqlDataSource1" AllowPaging="True" AllowSorting="True">
                 <Columns>
+                    <asp:CommandField ShowSelectButton="True" />
                     <asp:BoundField DataField="imageindex" HeaderText="imageindex" ReadOnly="True" SortExpression="imageindex" />
                     <asp:BoundField DataField="myguid" HeaderText="myguid" SortExpression="myguid" />
                     <asp:BoundField DataField="originalfilename" HeaderText="originalfilename" SortExpression="originalfilename" />

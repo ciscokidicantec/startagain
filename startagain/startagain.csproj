@@ -84,6 +84,8 @@
       <DependentUpon>ini.aspx</DependentUpon>
     </Compile>
     <Compile Include="MyDbConnections.cs" />
+    <Compile Include="Paramsinsert.cs" />
+    <Compile Include="Postcodes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -14,9 +14,6 @@ namespace startagain
         {
             string connStr = ConfigurationManager.ConnectionStrings["estateporrtalConnectionString"].ConnectionString;
             MySqlConnection myConnection = new MySqlConnection(connStr);
-
-
-
             return myConnection;
         }
 
