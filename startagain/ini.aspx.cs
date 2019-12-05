@@ -46,6 +46,17 @@ namespace startagain
 
             string Nameofplace;
 
+           if (!IsPostBack)
+           {
+         //     var countryQuery = from c in postcodes
+         //     orderby c.codeareadescription
+         //     select new { c.indexpostcode, c.codeareadescription };
+              DropDownList1.DataValueField = "indexpostcode";
+              DropDownList1.DataTextField = "codeareadescription";
+        //      DropDownList1.DataSource = countryQuery.ToList();
+              DataBind();
+           }
+
             //MySqlParameterCollection pm = new Parameters();
 
             //MySqlParameter[] myParamArray;
@@ -82,8 +93,8 @@ namespace startagain
 
             string mySelectQuery = "SELECT * FROM images";
 
-            creparam.CreateMySqlCommand(MyConnection, mySelectQuery,myParamArray);
-
+          //  creparam.CreateMySqlCommand(MyConnection, mySelectQuery,myParamArray);
+            
 
         }
 
@@ -97,8 +108,13 @@ namespace startagain
 
             WebClient client;
 
+            Scrape Myscraper = new Scrape();
+            Myscraper.Getimages();
+        
 
-            arrayurlimage[0] = "https://lc.zoocdn.com/32d3e36d37e1b758b4fa096e9078fd3bd1742ade.jpg";
+
+
+                arrayurlimage[0] = "https://lc.zoocdn.com/32d3e36d37e1b758b4fa096e9078fd3bd1742ade.jpg";
             arrayurlimage[1] = "https://lc.zoocdn.com/c2a8a5af5cec2db187ae1a37d4f8d3965e9d5b87.jpg";
             arrayurlimage[2] = "https://media.rightmove.co.uk/dir/crop/10:9-16:9/78k/77900/73713541/77900_MAR190232_IMG_06_0000_max_476x317.jpg";
             arrayurlimage[3] = "https://pbprodimages.azureedge.net/images/medium/2a00f1ab-a7cb-4315-b247-c3d40636f041.jpg";
@@ -178,6 +194,11 @@ namespace startagain
                     Response.Write("Error Message = " + ex.Message);
                 }
             }
+        }
+
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

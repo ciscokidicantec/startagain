@@ -8,13 +8,19 @@
 </head>
 <body>
     <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+    <form id="form1" runat="server">
+        <p>
+            <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+            </asp:DropDownList>
         <br />
     </p>
     <p>
         &nbsp;</p>
     <p>
         &nbsp;</p>
-    <form id="form1" runat="server">
         <p>
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
         </p>
