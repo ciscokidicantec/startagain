@@ -5,6 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <style type="text/css">
+        .auto-style1 {
+            width: 1429px;
+        }
+    </style>
 </head>
 <body>
     <p>
@@ -12,9 +17,19 @@
     <p>
         &nbsp;</p>
     <form id="form1" runat="server">
-        <p>
-            <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+        <p class="auto-style1">
+            <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" DataSourceID="SqlDataSource2" DataTextField="postcode" DataValueField="codeareadescription">
             </asp:DropDownList>
+    </p>
+        <p class="auto-style1">
+            &nbsp;</p>
+        <p class="auto-style1">
+            <asp:ListBox ID="ListBox1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource2" DataTextField="codeareadescription" DataValueField="postcode" Width="458px"></asp:ListBox>
+    </p>
+        <p>
+            &nbsp;</p>
+        <p>
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:estateporrtalConnectionStringpostcode %>" ProviderName="<%$ ConnectionStrings:estateporrtalConnectionStringpostcode.ProviderName %>" SelectCommand="select * from postcodes"></asp:SqlDataSource>
         <br />
     </p>
     <p>

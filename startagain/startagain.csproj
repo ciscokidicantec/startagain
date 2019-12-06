@@ -83,6 +83,7 @@
     <Compile Include="ini.aspx.designer.cs">
       <DependentUpon>ini.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Iscrapeitems.cs" />
     <Compile Include="MyDbConnections.cs" />
     <Compile Include="Paramsinsert.cs" />
     <Compile Include="parinsert.cs" />
