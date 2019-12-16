@@ -18,7 +18,7 @@ namespace startagain
 
     }
 
-    public class ScrapeItems
+    public class ScrapeItems: IScrapeitems
     {
 
         public string GetImages()

@@ -12,19 +12,23 @@
     </style>
 </head>
 <body>
-    <p>
-        &nbsp;</p>
-    <p>
-        &nbsp;</p>
     <form id="form1" runat="server">
         <p class="auto-style1">
             <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" DataSourceID="SqlDataSource2" DataTextField="postcode" DataValueField="codeareadescription">
             </asp:DropDownList>
     </p>
         <p class="auto-style1">
-            &nbsp;</p>
-        <p class="auto-style1">
             <asp:ListBox ID="ListBox1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource2" DataTextField="codeareadescription" DataValueField="postcode" Width="458px"></asp:ListBox>
+    </p>
+        <p class="auto-style1">
+            <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="indexpostcode" DataSourceID="SqlDataSource2">
+                <Columns>
+                    <asp:CommandField ShowSelectButton="True" />
+                    <asp:BoundField DataField="indexpostcode" HeaderText="indexpostcode" ReadOnly="True" SortExpression="indexpostcode" />
+                    <asp:BoundField DataField="postcode" HeaderText="postcode" SortExpression="postcode" />
+                    <asp:BoundField DataField="codeareadescription" HeaderText="codeareadescription" SortExpression="codeareadescription" />
+                </Columns>
+            </asp:GridView>
     </p>
         <p>
             &nbsp;</p>
