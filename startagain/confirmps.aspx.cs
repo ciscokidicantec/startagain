@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 using MySql.Data.MySqlClient;
 using System.IO;
-using System.Configuration;
+//using System.Configuration;
 
 
 namespace startagain
@@ -21,27 +21,28 @@ namespace startagain
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            //Read serial post code file
+            //Check mysql database against original .csv file make sure they are all there.
 
             int counter = 0;
             string line;
-            int posofcomma;
             string filelinetext = "";
 
             MySqlConnection connpostcode;
-            string DummyErrorMessage;
+            //string DummyErrorMessage;
 
-            //MyDbConnections getaninsertconnection = new MyDbConnections();
-            //connpostcode = getaninsertconnection.MyConnection();
+            MyDbConnections getaninsertconnection = new MyDbConnections();
+            connpostcode = getaninsertconnection.MyConnection();
 
-            string connStr = ConfigurationManager.ConnectionStrings["estateporrtalConnectionString"].ConnectionString;
-            MySqlConnection myConnection = new MySqlConnection(connStr);
+            //not supported in mysql "MultipleActiveResultSets = true;"
+
+            //The connection is done in a seperate class as shown above.
+            //string connStr = ConfigurationManager.ConnectionStrings["estateporrtalConnectionString"].ConnectionString;
+            //MySqlConnection myConnection = new MySqlConnection(connStr);
+
             MySqlCommand mypostcodecmd;
             MySqlDataReader rdrpostcode;
-            int recordcounter = 0;
-            //int linenumber = 0;
+            int recordcounter;
             long linenumber = 0;
-            string columnvalue;
 
             try
             {
@@ -60,9 +61,13 @@ namespace startagain
                     string commandstring = "SELECT CAST(Postcode AS CHAR(36)) AS Postcode1 " +
                                             "FROM estateporrtal.justheadercsv " +
                                             "WHERE CAST(Postcode AS CHAR(36)) = '" + filelinetext + "'";
-                    mypostcodecmd.Connection = myConnection;
+//                    mypostcodecmd.Connection = myConnection;
+                    mypostcodecmd.Connection = connpostcode;
+
                     mypostcodecmd.CommandText = commandstring;
-                    myConnection.Open();
+
+                    connpostcode.Open();
+                    //myConnection.Open();
                     rdrpostcode = mypostcodecmd.ExecuteReader();
                     while (rdrpostcode.Read())
                     {
@@ -73,10 +78,14 @@ namespace startagain
                         Response.Flush();
                         if (recordcounter != 1) continue;
                     }
-                    myConnection.Close();
+
+                    connpostcode.Close();
+                    //myConnection.Close();
                     mypostcodecmd.Dispose();
                 }
-                myConnection.Dispose();
+                connpostcode.Dispose();
+                //myConnection.Dispose();
+
                 file.Close();
                 file.Dispose();
             }
@@ -89,8 +98,8 @@ namespace startagain
             }
             finally
             {
-                myConnection.Dispose();
-                //file.Close();
+                connpostcode.Dispose();
+                //myConnection.Dispose();
             }
         }
     }
