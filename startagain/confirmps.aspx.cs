@@ -9,6 +9,8 @@ using MySql.Data.MySqlClient;
 using System.IO;
 //using System.Configuration;
 
+using startagain;
+
 
 namespace startagain
 {
@@ -26,6 +28,11 @@ namespace startagain
             int counter = 0;
             string line;
             string filelinetext = "";
+
+            // Read sample data from CSV file
+
+            Usecsv mycsvreader = new Usecsv();
+            bool myresult = mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\part2.csv");
 
             MySqlConnection connpostcode;
             //string DummyErrorMessage;
