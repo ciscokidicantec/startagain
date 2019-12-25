@@ -32,8 +32,10 @@ namespace startagain
             // Read sample data from CSV file
 
             Usecsv mycsvreader = new Usecsv();
-            mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\dummypostcodes.csv", true);
+            //mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\dummypostcodes.csv", true);
+            mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\part2.csv", true);
 
+            
             MySqlConnection connpostcode;
             //string DummyErrorMessage;
 
@@ -57,7 +59,10 @@ namespace startagain
                 StreamReader file = new StreamReader(@"C:\Users\Owner\Downloads\postcodes\postcodes.csv");
                 while ((line = file.ReadLine()) != null)
                 {
-                    if (linenumber >= 10) break;
+                    if (linenumber >= 10)
+                    {
+                        break;
+                    }
                     counter++;
                     recordcounter = 0;
                     if (counter == 1) continue;
@@ -106,6 +111,7 @@ namespace startagain
             finally
             {
                 connpostcode.Dispose();
+                
                 //myConnection.Dispose();
             }
         }
