@@ -13,6 +13,7 @@ using Microsoft.VisualBasic.FileIO;
 using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Input;
+using System.Globalization;
 
 namespace startagain
 {
@@ -96,54 +97,51 @@ namespace startagain
                         ",Northing int" +
                         ",Grid_Ref text" +
                         ",County text" +
-                        ",District text)"
-                        //",Ward text" +
-                        //",[District Code] text" +
-                        //",[Ward Code] text" +
-                        //",Country text" +
-                        //",[County Code] text" +
-                        //",Constituency text" +
-                        //",Introduced text" +
-                        //",[Terminated] text" +
-                        //",Parish text" +
-                        //",[National Park] text" +
-                        //",Population text" +
-                        //",Households text" +
-                        //",[Built up area] text" +
-                        //",[Built up sub - division] text" +
-                        //",[Lower layer super output area] text" +
-                        //",[Rural/Urban] text" +
-                        //",Region text" +
-                        //",Altitude text" +
-                        //",[London zone] text" +
-                        //",[LSOA Code] text" +
-                        //",[Local authority] text" +
-                        //",[MSOA Code] text" +
-                        //",[Middle layer super output area] text" +
-                        //",[Parish Code] text" +
-                        //",[Census output area] text" +
-                        //",[Constituency Code] text" +
-                        //",[Index of Multiple Deprivation] text" +
-                        //",Quality text" +
-                        //",[User Type] text" +
-                        //",[Last updated] text" +
-                        //",[Nearest station] text" +
-                        //",[Distance to station] text" +
-                        //",[Postcode Area] text" +
-                        //",[Postcode District] text" +
-                        //",[Police force] text" +
-                        //",[Water Company] text" +
-                        //",[Plus Code] text);" + 
-                        ,conn);
+                        ",District text" +
+                        ",Ward text" +
+                        ",District_Code text" +
+                        ",Ward_Code text" +
+                        ",Country text" +
+                        ",County_Code text" +
+                        ",Constituency text" +
+                        ",Introduced datetime" +
+                        ",Terminated datetime" +
+                        ",Parish text" +
+                        ",National_Park text" +
+                        ",Population int" +
+                        ",Households int" +
+                        ",Built_Up_Area text" +
+                        ",Built_Up_Sub_Division text" +
+                        ",Lower_Layer_Super_Output_Area text" +
+                        ",Rural_Urban text" +
+                        ",Region text" +
+                        ",Altitude int" +
+                        ",London_Zone int" +
+                        ",LSOA_Code text" +
+                        ",Local_Authority text" +
+                        ",MSOA_Code text" +
+                        ",Middle_Layer_Super_Output_Area text" +
+                        ",Parish_Code text" +
+                        ",Census_Output_Area text" +
+                        ",Constituency_Code text" +
+                        ",Index_Of_Multiple_Deprivation int" +
+                        ",Quality int" +
+                        ",User_Type int" +
+                        ",Last_Updated datetime" +
+                        ",Nearest_Station text" +
+                        ",Distance_To_Station decimal(10,7)" +
+                        ",Postcode_Area text" +
+                        ",Postcode_District text" +
+                        ",Police_Force text" +
+                        ",Water_Company text" +
+                        ",Plus_Code text);" 
+                        , conn);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     cmd.Clone();
                     cmd.Dispose();
                     conn.Close();
-
-                    //string stmt = "INSERT INTO dbo.Test(id, name) VALUES(@ID, @Name)";
-                    //SqlBulkCopy
 
                     //Insert csv rows
                     string CmdString = "INSERT INTO dbo.TotalPostcodes(" +
@@ -155,44 +153,44 @@ namespace startagain
                      ",Northing" +                                 //        05  ,[Northing]
                      ",Grid_Ref" +                               //        06  ,[Grid Ref]
                      ",County" +                                   //        07  ,[County]
-                     ",District)" +                                 //        08  ,[District]
-                                                                  //",Ward text" +                                     //        09  ,[Ward]
-                                                                  //",[District Code] text" +                          //        10  ,[District Code]
-                                                                  //",[Ward Code] text" +                              //        11  ,[Ward Code]
-                                                                  //",Country text" +                                  //        12  ,[Country]
-                                                                  //",[County Code] text" +                            //        13  ,[County Code]
-                                                                  //",Constituency text" +                             //        14  ,[Constituency]
-                                                                  //",Introduced text" +                               //        15  ,[Introduced]
-                                                                  //",[Terminated] text" +                             //        16  ,[Terminated]
-                                                                  //",Parish text" +                                   //        17  ,[Parish]
-                                                                  //",[National Park] text" +                          //        18  ,[National Park]
-                                                                  //",Population text" +                               //        19  ,[Population]
-                                                                  //",Households text" +                               //        20  ,[Households]
-                                                                  //",[Built up area] text" +                          //        21  ,[Built up area]
-                                                                  //",[Built up sub - division] text" +                //        22  ,[Built up sub - division]
-                                                                  //",[Lower layer super output area] text" +          //        23  ,[Lower layer super output area]
-                                                                  //",[Rural/Urban] text" +                            //        24  ,[Rural/Urban]
-                                                                  //",Region text" +                                   //        25  ,[Region]
-                                                                  //",Altitude text" +                                 //        26  ,[Altitude]
-                                                                  //",[London zone] text" +                            //        27  ,[London zone]
-                                                                  //",[LSOA Code] text" +                              //        28  ,[LSOA Code]
-                                                                  //",[Local authority] text" +                        //        29  ,[Local authority]
-                                                                  //",[MSOA Code] text" +                              //        30  ,[MSOA Code]
-                                                                  //",[Middle layer super output area] text" +         //        31  ,[Middle layer super output area]
-                                                                  //",[Parish Code] text" +                            //        32  ,[Parish Code]
-                                                                  //",[Census output area] text" +                     //        33  ,[Census output area]
-                                                                  //",[Constituency Code] text" +                      //        34  ,[Constituency Code]
-                                                                  //",[Index of Multiple Deprivation] text" +          //        35  ,[Index of Multiple Deprivation]
-                                                                  //",Quality text" +                                  //        36  ,[Quality]
-                                                                  //",[User Type] text" +                              //        37  ,[User Type]
-                                                                  //",[Last updated] text" +                           //        38  ,[Last updated]
-                                                                  //",[Nearest station] text" +                        //        39  ,[Nearest station]
-                                                                  //",[Distance to station] text" +                    //        40  ,[Distance to station]
-                                                                  //",[Postcode Area] text" +                          //        41  ,[Postcode Area]
-                                                                  //",[Postcode District] text" +                      //        42  ,[Postcode District]
-                                                                  //",[Police force] text" +                           //        43  ,[Police force]
-                                                                  //",[Water Company] text" +                          //        44  ,[Water Company]
-                                                                  //",[Plus Code] text)";                              //        45  ,[Plus Code])
+                     ",District" +                                 //        08  ,[District]
+                     ",Ward" +                                     //        09  ,[Ward]
+                     ",District_Code" +                          //        10  ,[District Code]
+                     ",Ward_Code" +                              //        11  ,[Ward Code]
+                     ",Country" +                                  //        12  ,[Country]
+                     ",County_Code" +                            //        13  ,[County Code]
+                     ",Constituency" +                             //        14  ,[Constituency]
+                     ",Introduced" +                               //        15  ,[Introduced]
+                     ",Terminated" +                             //        16  ,[Terminated]
+                     ",Parish" +                                   //        17  ,[Parish]
+                     ",National_Park" +                          //        18  ,[National Park]
+                     ",Population" +                               //        19  ,[Population]
+                     ",Households" +                               //        20  ,[Households]
+                     ",Built_Up_Area" +                          //        21  ,[Built up area]
+                     ",Built_Up_Sub_Division" +                //        22  ,[Built up sub - division]
+                     ",Lower_Layer_Super_Output_Area" +          //        23  ,[Lower layer super output area]
+                     ",Rural_Urban" +                            //        24  ,[Rural/Urban]
+                     ",Region" +                                   //        25  ,[Region]
+                     ",Altitude" +                                 //        26  ,[Altitude]
+                     ",London_Zone" +                            //        27  ,[London zone]
+                     ",LSOA_Code" +                              //        28  ,[LSOA Code]
+                     ",Local_Authority" +                        //        29  ,[Local authority]
+                     ",MSOA_Code" +                              //        30  ,[MSOA Code]
+                     ",Middle_Layer_Super_Output_Area" +         //        31  ,[Middle layer super output area]
+                     ",Parish_Code" +                            //        32  ,[Parish Code]
+                     ",Census_Output_Area" +                     //        33  ,[Census output area]
+                     ",Constituency_Code" +                      //        34  ,[Constituency Code]
+                     ",Index_Of_Multiple_Deprivation" +          //        35  ,[Index of Multiple Deprivation]
+                     ",Quality" +                                  //        36  ,[Quality]
+                     ",User_Type" +                              //        37  ,[User Type]
+                     ",Last_Updated" +                           //        38  ,[Last updated]
+                     ",Nearest_Station" +                        //        39  ,[Nearest station]
+                     ",Distance_To_Station" +                    //        40  ,[Distance to station]
+                     ",Postcode_Area" +                          //        41  ,[Postcode Area]
+                     ",Postcode_District" +                      //        42  ,[Postcode District]
+                     ",Police_Force" +                           //        43  ,[Police force]
+                     ",Water_Company" +                          //        44  ,[Water Company]
+                     ",Plus_Code)" +
                      " VALUES(@Postcode" +
                      ",@In_Use" +
                      ",@Latitude" +
@@ -201,9 +199,46 @@ namespace startagain
                      ",@Northing" +
                      ",@Grid_Ref" +
                      ",@County" +
-                     ",@District)";
+                     ",@District" +
+                     ",@Ward" +
+                     ",@District_Code" +
+                     ",@Ward_Code" +
+                     ",@Country" +
+                     ",@County_Code" +
+                     ",@Constituency" +
+                     ",@Introduced" +
+                     ",@Terminated" +
+                     ",@Parish" +
+                     ",@National_Park" +
+                     ",@Population" +
+                     ",@Households" +
+                     ",@Built_Up_Area" +
+                     ",@Built_Up_Sub_Division" +
+                     ",@Lower_Layer_Super_Output_Area" +
+                     ",@Rural_Urban" +
+                     ",@Region" +
+                     ",@Altitude" +
+                     ",@London_Zone" +
+                     ",@LSOA_Code" +
+                     ",@Local_Authority" +
+                     ",@MSOA_Code" +
+                     ",@Middle_Layer_Super_Output_Area" +
+                     ",@Parish_Code" +
+                     ",@Census_Output_Area" +
+                     ",@Constituency_Code" +
+                     ",@Index_Of_Multiple_Deprivation" +
+                     ",@Quality" +
+                     ",@User_Type" +
+                     ",@Last_Updated" +
+                     ",@Nearest_Station" +
+                     ",@Distance_To_Station" +
+                     ",@Postcode_Area" +
+                     ",@Postcode_District" +
+                     ",@Police_Force" +
+                     ",@Water_Company" +
+                     ",@Plus_Code)";
 
-        cmd = new SqlCommand(CmdString, conn);
+                    cmd = new SqlCommand(CmdString, conn);
                     cmd.Parameters.Add("@Postcode", SqlDbType.NVarChar,20);
                     cmd.Parameters.Add("@In_Use", SqlDbType.Bit);
                     cmd.Parameters.Add("@Latitude", SqlDbType.Decimal);
@@ -213,97 +248,105 @@ namespace startagain
                     cmd.Parameters.Add("@Grid_Ref", SqlDbType.Text);
                     cmd.Parameters.Add("@County", SqlDbType.Text);
                     cmd.Parameters.Add("@District", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Ward", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[District Code]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Ward Code]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Country", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[County Code]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Constituency", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Introduced", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Terminated]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Parish", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[National Park]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Population", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Households", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Built up area]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Built up sub - division]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Lower layer super output area]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Rural/Urban]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Region", SqlDbType.Text);
-                    //cmd.Parameters.Add("@Altitude", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[London zone]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[LSOA Code]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Local authority]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[MSOA Code]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Middle layer super output area]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Parish Code]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Census output area]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[User Type]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Last updated]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Nearest station]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Distance to station]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Postcode Area]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Postcode District]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Police force]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Water Company]", SqlDbType.Text);
-                    //cmd.Parameters.Add("@[Plus Code]", SqlDbType.Text);
+                    cmd.Parameters.Add("@Ward", SqlDbType.Text);
+                    cmd.Parameters.Add("@District_Code", SqlDbType.Text);
+                    cmd.Parameters.Add("@Ward_Code", SqlDbType.Text);
+                    cmd.Parameters.Add("@Country", SqlDbType.Text);
+                    cmd.Parameters.Add("@County_Code", SqlDbType.Text);
+                    cmd.Parameters.Add("@Constituency", SqlDbType.Text);
+                    cmd.Parameters.Add("@Introduced", SqlDbType.DateTime);
+                    cmd.Parameters.Add("@Terminated", SqlDbType.DateTime);
+                    cmd.Parameters.Add("@Parish", SqlDbType.Text);
+                    cmd.Parameters.Add("@National_Park", SqlDbType.Text);
+                    cmd.Parameters.Add("@Population", SqlDbType.Int);
+                    cmd.Parameters.Add("@Households", SqlDbType.Int);
+                    cmd.Parameters.Add("@Built_Up_Area", SqlDbType.Text);
+                    cmd.Parameters.Add("@Built_Up_Sub_Division", SqlDbType.Text);
+                    cmd.Parameters.Add("@Lower_Layer_Super_Output_Area", SqlDbType.Text);
+                    cmd.Parameters.Add("@Rural_Urban", SqlDbType.Text);
+                    cmd.Parameters.Add("@Region", SqlDbType.Text);
+                    cmd.Parameters.Add("@Altitude", SqlDbType.Int);
+                    cmd.Parameters.Add("@London_Zone", SqlDbType.Int);
+                    cmd.Parameters.Add("@LSOA_Code", SqlDbType.Text);
+                    cmd.Parameters.Add("@Local_Authority", SqlDbType.Text);
+                    cmd.Parameters.Add("@MSOA_Code", SqlDbType.Text);
+                    cmd.Parameters.Add("@Middle_Layer_Super_Output_Area", SqlDbType.Text);
+                    cmd.Parameters.Add("@Parish_Code", SqlDbType.Text);
+                    cmd.Parameters.Add("@Census_Output_Area", SqlDbType.Text);
+                    cmd.Parameters.Add("@Constituency_Code", SqlDbType.Text);
+                    cmd.Parameters.Add("@Index_Of_Multiple_Deprivation", SqlDbType.Int);
+                    cmd.Parameters.Add("@Quality", SqlDbType.Int);
+                    cmd.Parameters.Add("@User_Type", SqlDbType.Int);
+                    cmd.Parameters.Add("@Last_Updated", SqlDbType.DateTime);
+                    cmd.Parameters.Add("@Nearest_Station", SqlDbType.Text);
+                    cmd.Parameters.Add("@Distance_To_Station", SqlDbType.Decimal);
+                    cmd.Parameters.Add("@Postcode_Area", SqlDbType.Text);
+                    cmd.Parameters.Add("@Postcode_District", SqlDbType.Text);
+                    cmd.Parameters.Add("@Police_Force", SqlDbType.Text);
+                    cmd.Parameters.Add("@Water_Company", SqlDbType.Text);
+                    cmd.Parameters.Add("@Plus_Code", SqlDbType.Text);
 
                     conn.Open();
                     string[] fields = new string[46];
                     int rowseffected;
 
-                    //dbCommand.CommandText = "INSERT INTO People (name, isStudent) VALUES(@name, @isStudent)";
-                    //dbCommand.Parameters.AddWithValue("@name", people1.name);
-                    //dbCommand.Parameters.AddWithValue("@isStudent", people1.isStudent);
-                    //dbCommand.ExecuteNonQuery();
+                    DateTime currentdt = DateTime.Now;
 
                     while (!csvParser.EndOfData)
                     {
                         // Read current line fields, pointer moves to the next line.
                         fields = csvParser.ReadFields();
                         cmd.Parameters["@Postcode"].Value = fields[0];
+                        if(fields[0] == "W4 9AB")
+                        {
+                            string errorofps = fields[0];
+                        }
                         cmd.Parameters["@In_Use"].Value = (fields[1] == "Yes") ? true : false;
-                        cmd.Parameters["@Latitude"].Value = fields[2];
-                        cmd.Parameters["@Longitude"].Value = fields[3];
+                        cmd.Parameters["@Latitude"].Value = (fields[2] == "") ? Decimal.Parse("0.0") : Decimal.Parse(fields[2]);
+                        cmd.Parameters["@Longitude"].Value = (fields[3] == "") ? Decimal.Parse("0.0") : Decimal.Parse(fields[3]);
                         cmd.Parameters["@Easting"].Value = (fields[4] == "") ? 0 : int.Parse(fields[4]);
                         cmd.Parameters["@Northing"].Value = (fields[5] == "") ? 0 : int.Parse(fields[5]);
                         cmd.Parameters["@Grid_Ref"].Value = fields[6];
                         cmd.Parameters["@County"].Value = fields[7];
                         cmd.Parameters["@District"].Value = fields[8];
-                        //cmd.Parameters["@Ward"].Value = fields[9];
-                        //cmd.Parameters["@[District Code"].Value = fields[10];
-                        //cmd.Parameters["@[Ward Code"].Value = fields[11];
-                        //cmd.Parameters["@Country"].Value = fields[12];
-                        //cmd.Parameters["@[County Code"].Value = fields[13];
-                        //cmd.Parameters["@Constituency text"].Value = fields[14];
-                        //cmd.Parameters["@Introduced text"].Value = fields[15];
-                        //cmd.Parameters["@[Terminated"].Value = fields[16];
-                        //cmd.Parameters["@Parish text"].Value = fields[17];
-                        //cmd.Parameters["@[National Park"].Value = fields[18];
-                        //cmd.Parameters["@Population text"].Value = fields[19];
-                        //cmd.Parameters["@Households text"].Value = fields[20];
-                        //cmd.Parameters["@[Built up area"].Value = fields[21];
-                        //cmd.Parameters["@[Built up sub - division"].Value = fields[22];
-                        //cmd.Parameters["@[Lower layer super output area"].Value = fields[23];
-                        //cmd.Parameters["@[Rural/Urban"].Value = fields[24];
-                        //cmd.Parameters["@[Region"].Value = fields[25];
-                        //cmd.Parameters["@[Altitude"].Value = fields[26];
-                        //cmd.Parameters["@[London zone"].Value = fields[27];
-                        //cmd.Parameters["@[LSOA Code"].Value = fields[28];
-                        //cmd.Parameters["@[Local authority"].Value = fields[29];
-                        //cmd.Parameters["@[MSOA Code"].Value = fields[30];
-                        //cmd.Parameters["@[Middle layer super output area"].Value = fields[31];
-                        //cmd.Parameters["@[Parish Code"].Value = fields[32];
-                        //cmd.Parameters["@[Census output area"].Value = fields[33];
-                        //cmd.Parameters["@[User Type"].Value = fields[34];
-                        //cmd.Parameters["@[Last updated"].Value = fields[35];
-                        //cmd.Parameters["@[Nearest station"].Value = fields[36];
-                        //cmd.Parameters["@[Distance to station"].Value = fields[37];
-                        //cmd.Parameters["@[Postcode Area"].Value = fields[38];
-                        //cmd.Parameters["@[Postcode District"].Value = fields[39];
-                        //cmd.Parameters["@[Police force"].Value = fields[40];
-                        //cmd.Parameters["@[Water Company"].Value = fields[41];
-                        //cmd.Parameters["@[Plus Code"].Value = fields[42];
+                        cmd.Parameters["@Ward"].Value = fields[9];
+                        cmd.Parameters["@District_Code"].Value = fields[10];
+                        cmd.Parameters["@Ward_Code"].Value = fields[11];
+                        cmd.Parameters["@Country"].Value = fields[12];
+                        cmd.Parameters["@County_Code"].Value = fields[13];
+                        cmd.Parameters["@Constituency"].Value = fields[14];
+                        cmd.Parameters["@Introduced"].Value = fields[15];
+                        cmd.Parameters["@Terminated"].Value = (fields[16] == "") ? currentdt : DateTime.Parse(fields[16]);
+                        cmd.Parameters["@Parish"].Value = fields[17];
+                        cmd.Parameters["@National_Park"].Value = fields[18];
+                        cmd.Parameters["@Population"].Value = (fields[19] == "") ? 0 : int.Parse(fields[19]);
+                        cmd.Parameters["@Households"].Value = (fields[20] == "") ? 0 : int.Parse(fields[20]);
+                        cmd.Parameters["@Built_Up_Area"].Value = fields[21];
+                        cmd.Parameters["@Built_Up_Sub_Division"].Value = fields[22];
+                        cmd.Parameters["@Lower_Layer_Super_Output_Area"].Value = fields[23];
+                        cmd.Parameters["@Rural_Urban"].Value = fields[24];
+                        cmd.Parameters["@Region"].Value = fields[25];
+                        cmd.Parameters["@Altitude"].Value = (fields[26] == "") ? 0 : int.Parse(fields[26]);
+                        cmd.Parameters["@London_Zone"].Value = (fields[27] == "") ? 0 : int.Parse(fields[27]);
+                        cmd.Parameters["@LSOA_Code"].Value = fields[28];
+                        cmd.Parameters["@Local_Authority"].Value = fields[29];
+                        cmd.Parameters["@MSOA_Code"].Value = fields[30];
+                        cmd.Parameters["@Middle_Layer_Super_Output_Area"].Value = fields[31];
+                        cmd.Parameters["@Parish_Code"].Value = fields[32];
+                        cmd.Parameters["@Census_Output_Area"].Value = fields[33];
+                        cmd.Parameters["@Constituency_Code"].Value = fields[34];
+                        cmd.Parameters["@Index_Of_Multiple_Deprivation"].Value = (fields[35] == "") ? 0 : int.Parse(fields[35]);
+                        cmd.Parameters["@Quality"].Value = (fields[36] == "") ? 0 : int.Parse(fields[36]);
+                        cmd.Parameters["@User_Type"].Value = (fields[37] == "") ? 0 : int.Parse(fields[37]);
+                        cmd.Parameters["@Last_Updated"].Value = (fields[38] == "") ? currentdt : DateTime.Parse(fields[38]);
+                        cmd.Parameters["@Nearest_Station"].Value = fields[39];
+                        cmd.Parameters["@Distance_To_Station"].Value = (fields[40] == "") ? Decimal.Parse("0.0") : Decimal.Parse(fields[40], NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint);
+                        cmd.Parameters["@Postcode_Area"].Value = fields[41];
+                        cmd.Parameters["@Postcode_District"].Value = fields[42];
+                        cmd.Parameters["@Police_Force"].Value = fields[43];
+                        cmd.Parameters["@Water_Company"].Value = fields[44];
+                        cmd.Parameters["@Plus_Code"].Value = fields[45];
+
                         rowseffected = cmd.ExecuteNonQuery();
                     }
                     conn.Close();
@@ -313,18 +356,8 @@ namespace startagain
                 {
                     string errormess02 = e.Message;
                 }                       
-
-            //string[] mycolumns = csvParser.ReadLine();
-
-            //while (!csvParser.EndOfData)
-            //    {
-                    // Read current line fields, pointer moves to the next line.
-            //        string[] fields = csvParser.ReadFields();
-            //        string Name = fields[0];
-            //        string Address = fields[1];
-            //    }
+                    //string[] mycolumns = csvParser.ReadLine();
             }
-
         }
     }
 }
