@@ -33,11 +33,11 @@ namespace startagain
 
             Usecsv mycsvreader = new Usecsv();
             //mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\dummypostcodes.csv", true);
-            mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\part2.csv", true);
+            //mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\part2.csv", true, false);
+            mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\postcodes.csv", true,true, false);
+          
             mycsvreader = null;
-
-
-
+                       
             MySqlConnection connpostcode;
             //string DummyErrorMessage;
 

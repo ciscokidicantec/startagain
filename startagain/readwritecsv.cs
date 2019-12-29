@@ -19,11 +19,11 @@ namespace startagain
 {
     public class Usecsv
     {
-        public void ReadMyCSV(string filename, bool Skipheader)
+        public void ReadMyCSV(string filename, bool Skipheader,bool Deletetable,bool deletedatabase)
         {
             
             string path = filename;
-            //var path = @"C:\Person.csv"; // Habeeb, "Dubai Media City, Dubai"
+            SqlCommand cmd;
 
             using (TextFieldParser csvParser = new TextFieldParser(path))
             {
@@ -35,7 +35,6 @@ namespace startagain
                 if (Skipheader)
                 {
                     string[] mycolumns = csvParser.ReadFields();
-                    //return  mycolumns;
                 }
 
                 try
@@ -55,44 +54,72 @@ namespace startagain
                     //SqlConnection conn = new SqlConnection("Data source=.\\SQLEXPRESS19;" +
                     //"AttachDbFilename=|DataDirectory|\\FullPostcodes.mdf;Integrated Security = True");
 
-//ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+                    //ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+                  
+                    
+                    if (deletedatabase)
+                    {
+                        try
+                        {
 
-                    //String str;
-                    //SqlConnection myConn = new SqlConnection("Server=localhost;Integrated security=SSPI;database=master");
+                            String str;
+                            SqlConnection myConn = new SqlConnection("Server=localhost;Data source=.\\SQLEXPRESS19;Integrated security=SSPI");
+                            SqlCommand dropdatabasecmd;
+                            string dropdatabasecommand;
 
-                    //str = "CREATE DATABASE MyDatabase ON PRIMARY " +
-                    //    "(NAME = MyDatabase_Data, " +
-                    //    "FILENAME = 'C:\\MyDatabaseData.mdf', " +
-                    //    "SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%) " +
-                    //    "LOG ON (NAME = MyDatabase_Log, " +
-                    //    "FILENAME = 'C:\\MyDatabaseLog.ldf', " +
-                    //    "SIZE = 1MB, " +
-                    //    "MAXSIZE = 5MB, " +
-                    //    "FILEGROWTH = 10%)";
+                            dropdatabasecommand = "DROP DATABASE IF EXISTS EstateProperty;";
+                                dropdatabasecmd = new SqlCommand(dropdatabasecommand, myConn);
+                                myConn.Open();
+                                dropdatabasecmd.ExecuteNonQuery();
+                                dropdatabasecmd.Dispose();
+                                myConn.Close();
 
-                    //SqlCommand myCommand = new SqlCommand(str, myConn);
+                            str = "CREATE DATABASE EstateProperty ON PRIMARY " +
+                                   "(NAME = EstateProperty, " +
+                                   "FILENAME = 'C:\\Program Files\\Microsoft SQL Server\\MSSQL15.SQLEXPRESS19\\MSSQL\\DATA\\EstateProperty.mdf'," +
+                                   "SIZE = 5000MB, MAXSIZE = UNLIMITED, FILEGROWTH = 25%)";
 
-//pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+                            //"LOG ON (NAME = C:\\Program Files\\Microsoft SQL Server\\MSSQL15.SQLEXPRESS19\\MSSQL\\DATA\\EstateProperty_Log, " +
+                            //"FILENAME = 'C:\\Program Files\\Microsoft SQL Server\\MSSQL15.SQLEXPRESS19\\MSSQL\\DATAEstateProperty_Log.ldf', " +
+                            //"SIZE = 1000MB, " +
+                            //"MAXSIZE = 4000MB, " +
+                            //"FILEGROWTH = 50%)";
 
-                    string dropcommand = "DROP TABLE IF EXISTS TotalPostCodes;";
+                            SqlCommand myCommand = new SqlCommand(str, myConn);
+                            myConn.Open();
+                            myCommand.ExecuteNonQuery();
+                            myCommand.Dispose();
+                            if (myConn.State == ConnectionState.Open)
+                            {
+                                myConn.Close();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            string mysqlerror = e.Message;
+                        }
+                    }
+                    //return;
 
-                    //MessageBox.Show("DataBase is Created Successfully");
-                    //if (myConn.State == ConnectionState.Open)
-                    //{
-                    //    myConn.Close();
-                    //}
+                    //pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
 
-                    SqlCommand dropcmd = new SqlCommand(dropcommand, conn);
-                    conn.Open();
-                    dropcmd.ExecuteNonQuery();
-                    dropcmd.Dispose();
-                    conn.Close();
+                    if (Deletetable)
+                    {
+                        SqlCommand dropcmd;
+                        string dropcommand;
 
-                SqlCommand cmd = new SqlCommand("CREATE TABLE TotalPostcodes(" +
+                        dropcommand = "DROP TABLE IF EXISTS TotalPostCodes;";
+                        dropcmd = new SqlCommand(dropcommand, conn);
+                        conn.Open();
+                        dropcmd.ExecuteNonQuery();
+                        dropcmd.Dispose();
+                        conn.Close();
+
+                        cmd = new SqlCommand("CREATE TABLE TotalPostcodes(" +
                         "Postcode nvarchar(20) NOT NULL PRIMARY KEY" +
                         ",In_Use bit" +
-                        ",Latitude decimal(10,8)" +
-                        ",Longitude decimal(10,8)" +
+                        ",Latitude decimal(12,9)" +
+                        ",Longitude decimal(12,9)" +
                         ",Easting int" +
                         ",Northing int" +
                         ",Grid_Ref text" +
@@ -129,19 +156,20 @@ namespace startagain
                         ",User_Type int" +
                         ",Last_Updated datetime" +
                         ",Nearest_Station text" +
-                        ",Distance_To_Station decimal(10,7)" +
+                        ",Distance_To_Station decimal(12,9)" +
                         ",Postcode_Area text" +
                         ",Postcode_District text" +
                         ",Police_Force text" +
                         ",Water_Company text" +
-                        ",Plus_Code text);" 
+                        ",Plus_Code text);"
                         , conn);
 
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    cmd.Clone();
-                    cmd.Dispose();
-                    conn.Close();
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        cmd.Clone();
+                        cmd.Dispose();
+                        conn.Close();
+                    }
 
                     //Insert csv rows
                     string CmdString = "INSERT INTO dbo.TotalPostcodes(" +
@@ -297,13 +325,18 @@ namespace startagain
                         // Read current line fields, pointer moves to the next line.
                         fields = csvParser.ReadFields();
                         cmd.Parameters["@Postcode"].Value = fields[0];
-                        if(fields[0] == "W4 9AB")
-                        {
-                            string errorofps = fields[0];
-                        }
+                       // if(fields[0] == "BN10 8LA")
+                       // {
+                       //     string errorofps = fields[0];
+                       // }
+
+                        //System.Globalization.NumberStyles.Any
+
                         cmd.Parameters["@In_Use"].Value = (fields[1] == "Yes") ? true : false;
-                        cmd.Parameters["@Latitude"].Value = (fields[2] == "") ? Decimal.Parse("0.0") : Decimal.Parse(fields[2]);
-                        cmd.Parameters["@Longitude"].Value = (fields[3] == "") ? Decimal.Parse("0.0") : Decimal.Parse(fields[3]);
+                        cmd.Parameters["@Latitude"].Value = (fields[2] == "") ? Decimal.Parse("0.0", System.Globalization.NumberStyles.Any) 
+                                                                                : Decimal.Parse(fields[2],System.Globalization.NumberStyles.Any);
+                        cmd.Parameters["@Longitude"].Value = (fields[3] == "") ? Decimal.Parse("0.0", System.Globalization.NumberStyles.Any)
+                                                                                : Decimal.Parse(fields[3],System.Globalization.NumberStyles.Any);
                         cmd.Parameters["@Easting"].Value = (fields[4] == "") ? 0 : int.Parse(fields[4]);
                         cmd.Parameters["@Northing"].Value = (fields[5] == "") ? 0 : int.Parse(fields[5]);
                         cmd.Parameters["@Grid_Ref"].Value = fields[6];
@@ -315,7 +348,7 @@ namespace startagain
                         cmd.Parameters["@Country"].Value = fields[12];
                         cmd.Parameters["@County_Code"].Value = fields[13];
                         cmd.Parameters["@Constituency"].Value = fields[14];
-                        cmd.Parameters["@Introduced"].Value = fields[15];
+                        cmd.Parameters["@Introduced"].Value = (fields[15] == "") ? currentdt : DateTime.Parse(fields[15]);
                         cmd.Parameters["@Terminated"].Value = (fields[16] == "") ? currentdt : DateTime.Parse(fields[16]);
                         cmd.Parameters["@Parish"].Value = fields[17];
                         cmd.Parameters["@National_Park"].Value = fields[18];
@@ -340,7 +373,8 @@ namespace startagain
                         cmd.Parameters["@User_Type"].Value = (fields[37] == "") ? 0 : int.Parse(fields[37]);
                         cmd.Parameters["@Last_Updated"].Value = (fields[38] == "") ? currentdt : DateTime.Parse(fields[38]);
                         cmd.Parameters["@Nearest_Station"].Value = fields[39];
-                        cmd.Parameters["@Distance_To_Station"].Value = (fields[40] == "") ? Decimal.Parse("0.0") : Decimal.Parse(fields[40], NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint);
+                        cmd.Parameters["@Distance_To_Station"].Value = (fields[40] == "") ? Decimal.Parse("0.0", System.Globalization.NumberStyles.Any)
+                                                                                            : Decimal.Parse(fields[40],System.Globalization.NumberStyles.Any);
                         cmd.Parameters["@Postcode_Area"].Value = fields[41];
                         cmd.Parameters["@Postcode_District"].Value = fields[42];
                         cmd.Parameters["@Police_Force"].Value = fields[43];
