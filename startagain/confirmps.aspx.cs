@@ -32,11 +32,13 @@ namespace startagain
             // Read sample data from CSV file
 
             Usecsv mycsvreader = new Usecsv();
-            //mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\dummypostcodes.csv", true);
-            //mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\part2.csv", true, false);
-            mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\postcodes.csv", true,true, false);
-          
-            mycsvreader = null;
+            //mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\postcodes.csv", false,false, false);
+            //mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\part2.csv", false,false, false);
+
+
+            mycsvreader.ReadMyCSV("C:\\Users\\Owner\\Downloads\\postcodes\\totalpostcodes\\postcodes.csv", true, true, false);
+
+         mycsvreader = null;
                        
             MySqlConnection connpostcode;
             //string DummyErrorMessage;
