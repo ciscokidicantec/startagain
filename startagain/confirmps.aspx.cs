@@ -34,7 +34,7 @@ namespace startagain
 
             DateTime Startdate = DateTime.Now;
 
-            string transfer = "";
+            //string transfer = "";
 
             string cs = @"server=localhost;database=Postcodetransfer;userid=root;password=Coreldraw1$";
             transferconn = null;
@@ -79,7 +79,7 @@ namespace startagain
                 "`County_Code` text," +
                 "`Constituency` text," +
                 "`Introduced` datetime," +
-                "`Terminated` datetime," +
+                "`Dateterminated` datetime," + //changed from Terminated
                 "`Parish` text," +
                 "`National_Park` text," +
                 "`Population` int," +
@@ -140,7 +140,7 @@ namespace startagain
                  ",County_Code" +                            //        13  ,[County Code]
                  ",Constituency" +                             //        14  ,[Constituency]
                  ",Introduced" +                               //        15  ,[Introduced]
-                 ",`Terminated`" +                             //        16  ,[Terminated]
+                 ",Dateterminated" +                             //        16  ,[Terminated]
                  ",Parish" +                                   //        17  ,[Parish]
                  ",National_Park" +                          //        18  ,[National Park]
                  ",Population" +                               //        19  ,[Population]
@@ -186,7 +186,7 @@ namespace startagain
                  ",@County_Code" +
                  ",@Constituency" +
                  ",@Introduced" +
-                 ",@`Terminated`" +
+                 ",@Dateterminated" +           // Was Terminated
                  ",@Parish" +
                  ",@National_Park" +
                  ",@Population" +
@@ -234,7 +234,7 @@ namespace startagain
                 cmd.Parameters.Add("@County_Code", MySqlDbType.Text);
                 cmd.Parameters.Add("@Constituency", MySqlDbType.Text);
                 cmd.Parameters.Add("@Introduced", MySqlDbType.DateTime);
-                cmd.Parameters.Add("@`Terminated`", MySqlDbType.DateTime);
+                cmd.Parameters.Add("@Dateterminated", MySqlDbType.DateTime);        // Was Terminated
                 cmd.Parameters.Add("@Parish", MySqlDbType.Text);
                 cmd.Parameters.Add("@National_Park", MySqlDbType.Text);
                 cmd.Parameters.Add("@Population", MySqlDbType.Int32);
@@ -278,7 +278,7 @@ namespace startagain
 
                 SqlCommand inscommand = new SqlCommand();
                 inscommand.Connection = conn;
-                inscommand.CommandText = "SELECT TOP(10) * FROM TotalPostcodes;";
+                inscommand.CommandText = "SELECT TOP(1000) * FROM TotalPostcodes;";
                 //inscommand.CommandText = "SELECT * FROM TotalPostcodes;";
 
                 conn.Open();
@@ -311,10 +311,8 @@ namespace startagain
                     cmd.Parameters["@County_Code"].Value = reader["County_Code"];
                     cmd.Parameters["@Constituency"].Value = reader["Constituency"];
                     cmd.Parameters["@Introduced"].Value = reader["Introduced"];
-                    //cmd.Parameters["@Introduced"].Value = (fields[15] == "") ? currentdt : DateTime.Parse(fields[15]);
-                    //cmd.Parameters["@`Terminated`"].Value = reader["Terminated"];
-                    //cmd.Parameters["@`Terminated`"].Value = (reader["Terminated"] == "") ? currentdt : reader["Terminated"];
-                    cmd.Parameters["@`Terminated`"].Value = (reader["Terminated"] == "") ? currentdt : currentdt;
+                    cmd.Parameters["@Dateterminated"].Value = reader["Terminated"];
+                    //cmd.Parameters["@Dateterminated"].Value = (reader["Terminated"] == "") ? currentdt : reader["Terminated"];
                     cmd.Parameters["@Parish"].Value = reader["Parish"];
                     cmd.Parameters["@National_Park"].Value = reader["National_Park"];
                     cmd.Parameters["@Population"].Value = reader["Population"];
@@ -362,16 +360,10 @@ namespace startagain
                         "      Post Code Value = " + (string)reader["Postcode"] +
                         "   Latitude = " + reader["Latitude"] +
                         "   Latitude = " + reader["Longitude"] +
-                        "   Terminated = " + reader["Terminated"]
+                        "   Dateterminated = " + reader["Terminated"]
                         );
                     Response.Flush();
                 }
-
-
-                //cmd.Dispose();
-                //transferconn.Close();
-                //transferconn.Dispose();
-
             }
             catch (MySqlException ex)
 
@@ -380,15 +372,14 @@ namespace startagain
 
             }
             finally
-
             {
                 DateTime Completiontime = DateTime.Now;
                 TimeSpan ts = Completiontime - Startdate;
                 Response.Write("<br/>Time Taken = " + ts);
                 Response.Write("<br/>Transfering Data From Sequel Server To MySql Completed");
                 Response.Flush();
-
-
+                transferconn.Close();
+                transferconn.Dispose();
                 if (transferconn != null)
                 {
                     transferconn.Close();
