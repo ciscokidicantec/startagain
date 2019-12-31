@@ -10,7 +10,9 @@
     <form id="form1" runat="server">
         <div>
 
-            <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
+            <asp:Button ID="Button2" runat="server" OnClick="Button1_Click" Text="Import To Seq Svr" />
+
+            <asp:Button ID="Button1" runat="server" Text="Transfer To Mysql" OnClick="Button2_Click" Width="265px" />
         </div>
     </form>
 </body>
