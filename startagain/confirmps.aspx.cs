@@ -30,28 +30,78 @@ namespace startagain
         protected void Button2_Click(object sender, EventArgs e)
         {
 
+          //  string mycs = @"server=localhost;userid=root;password=Coreldraw1$";
+          //  MySqlConnection myconn = null;
+          //  MySqlCommand mycmd;
+
+           // try
+         //   {
+         //       myconn = new MySqlConnection(mycs);
+         //       myconn.Open();
+
+          //      string s0 = "CREATE DATABASE IF NOT EXISTS `NewDatabase`;";
+          //      mycmd = new MySqlCommand(s0, myconn);
+          //      mycmd.ExecuteNonQuery();
+
+
+         //   }
+         //   catch (MySqlException ex)
+
+         //   {
+         //       string myerror = ex.Message;
+
+         //   }
+         //   finally
+
+         //   {
+         //       if (myconn != null)
+         //       {
+         //           myconn.Close();
+         //       }
+         //   }
+
+
+
             MySqlConnection transferconn;
 
             DateTime Startdate = DateTime.Now;
 
             //string transfer = "";
 
-            string cs = @"server=localhost;database=Postcodetransfer;userid=root;password=Coreldraw1$";
             transferconn = null;
             MySqlCommand cmd;
             Response.BufferOutput = false;
 
             try
             {
-                transferconn = new MySqlConnection(cs);
-                transferconn.Open();
+                transferconn = new MySqlConnection();
+                MySqlConnection createconnection;
+                MySqlCommand mycmd;
 
-                string creatdb = "CREATE DATABASE IF NOT EXISTS `Postcodetransfer`;";
-                cmd = new MySqlCommand(creatdb, transferconn);
-                cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                transferconn.Close();
-                transferconn.Dispose();
+                string cs = @"server=localhost;database=Postcodetransfer;userid=root;password=Coreldraw1$";
+
+                if(CheckBox1.Checked)
+                {
+                    string createconnectiontext = @"server=localhost;userid=root;password=Coreldraw1$";
+                    string Databasedroptext = "DROP DATABASE IF EXISTS `Postcodetransfer`;";
+                        transferconn = new MySqlConnection(createconnectiontext);
+                        transferconn.Open();
+                        cmd = new MySqlCommand(Databasedroptext, transferconn);
+                        cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                        transferconn.Close();
+                        transferconn.Dispose();
+
+                        createconnection = new MySqlConnection(createconnectiontext);
+                        string creatdb = "CREATE DATABASE IF NOT EXISTS `Postcodetransfer`;";
+                        mycmd = new MySqlCommand(creatdb, createconnection);
+                        mycmd.CommandText = creatdb;
+                        createconnection.Open();                       
+                        mycmd.ExecuteNonQuery();
+                        mycmd.Dispose();
+                        createconnection.Close();
+                        createconnection.Dispose();
+                }
 
                 string tabledroptext = "DROP TABLE IF EXISTS `postcodetransfer`.`testpostcodetransfer`";
                 transferconn = new MySqlConnection(cs);
@@ -119,8 +169,6 @@ namespace startagain
                 cmd.Dispose();
                 transferconn.Close();
                 transferconn.Dispose();
-
-                // cmd.CommandText = "INSERT INTO cars(name, price) VALUES('Mercedes',57127)";
 
                 //read seq svr
                 string CmdString = "INSERT INTO `testpostcodetransfer` (" +
@@ -353,6 +401,8 @@ namespace startagain
                     cmd.Parameters["@Water_Company"].Value = reader["Water_Company"];
                     cmd.Parameters["@Plus_Code"].Value = reader["Plus_Code"];
 
+                    //cmd.Parameters.AddWithValue("@Plus_Code", MySqlDbType.Text).Value = reader["Plus_Code"];
+
                     rowseffected = cmd.ExecuteNonQuery();
                     linenumber++;
 
@@ -366,10 +416,24 @@ namespace startagain
                 }
             }
             catch (MySqlException ex)
-
             {
-                string emessage = ex.Message;
-
+                switch (ex.Number)
+                {
+                    case 0:
+                        Response.Write("<br/><br/><br/>Cannot connect to server. " +
+                                        "<br/>Sql Error Message = " + ex.Message +
+                                        "<br/>Sql Error Number = " + ex.Number + "<br/><br/>");
+                        break;
+                    case 1045:
+                        Response.Write("Invalid username/password, please try again" +
+                                       "<br/>Sql Error Message = " + ex.Message +
+                                       "<br/>Sql Error Number = " + ex.Number + "<br/><br/>");
+                        break;
+                    default:
+                        Response.Write("<br/>Unknown Error = " + ex.Number +
+                                        " Error Message = " + ex.Message);
+                        break;
+                }
             }
             finally
             {
@@ -385,7 +449,6 @@ namespace startagain
                     transferconn.Close();
                 }
             }
-
         }
 
         protected void Button1_Click(object sender, EventArgs e)
