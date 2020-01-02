@@ -14,6 +14,7 @@ using System.IO;
 //using MySql.Data.MySqlClient;
 
 using System.Data.SqlClient;
+using System.Configuration;
 
 using startagain;
 
@@ -30,39 +31,6 @@ namespace startagain
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-
-          //  string mycs = @"server=localhost;userid=root;password=Coreldraw1$";
-          //  MySqlConnection myconn = null;
-          //  MySqlCommand mycmd;
-
-           // try
-         //   {
-         //       myconn = new MySqlConnection(mycs);
-         //       myconn.Open();
-
-          //      string s0 = "CREATE DATABASE IF NOT EXISTS `NewDatabase`;";
-          //      mycmd = new MySqlCommand(s0, myconn);
-          //      mycmd.ExecuteNonQuery();
-
-
-         //   }
-         //   catch (MySqlException ex)
-
-         //   {
-         //       string myerror = ex.Message;
-
-         //   }
-         //   finally
-
-         //   {
-         //       if (myconn != null)
-         //       {
-         //           myconn.Close();
-         //       }
-         //   }
-
-
-
             MySqlConnection transferconn;
 
             DateTime Startdate = DateTime.Now;
@@ -79,11 +47,17 @@ namespace startagain
                 MySqlConnection createconnection;
                 MySqlCommand mycmd;
 
-                string cs = @"server=localhost;database=Postcodetransfer;userid=root;password=Coreldraw1$";
+                //string connStr = ConfigurationManager.ConnectionStrings["postcodetransfer"].ConnectionString;
+                string cs = ConfigurationManager.ConnectionStrings["mysqltransferstring"].ConnectionString;
+
+
+                //string cs = @"server=localhost;database=Postcodetransfer;userid=root;password=Coreldraw1$";
 
                 if(CheckBox1.Checked)
                 {
-                    string createconnectiontext = @"server=localhost;userid=root;password=Coreldraw1$";
+                    string createconnectiontext = ConfigurationManager.ConnectionStrings["mysqltransferstringdeletedatabase"].ConnectionString;
+                    
+                    //string createconnectiontext = @"server=localhost;userid=root;password=Coreldraw1$";
                     string Databasedroptext = "DROP DATABASE IF EXISTS `Postcodetransfer`;";
                         transferconn = new MySqlConnection(createconnectiontext);
                         transferconn.Open();
@@ -102,76 +76,96 @@ namespace startagain
                         mycmd.Dispose();
                         createconnection.Close();
                         createconnection.Dispose();
+
+                        return;
+
                 }
 
-                string tabledroptext = "DROP TABLE IF EXISTS `postcodetransfer`.`testpostcodetransfer`";
-                transferconn = new MySqlConnection(cs);
-                cmd = new MySqlCommand(tabledroptext,transferconn);
-                transferconn.Open();
-                cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                transferconn.Close();
-                transferconn.Dispose();
+                if (CheckBox2.Checked)
+                {
+                    string tabledroptext = "DROP TABLE IF EXISTS `postcodetransfer`.`testpostcodetransfer`";
+                    transferconn = new MySqlConnection(cs);
+                    cmd = new MySqlCommand(tabledroptext, transferconn);
+                    transferconn.Open();
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                    transferconn.Close();
+                    transferconn.Dispose();
 
-                string cretble = "CREATE TABLE `postcodetransfer`.`testpostcodetransfer` (" +
-                "PostCode nvarchar(20) NOT NULL," +
-                "`In_Use` bit," +
-                "`Latitude` decimal(12,9)," +
-                "`Longitude` decimal(13,9)," +
-                "`Easting` int," +
-                "`Northing` int," +
-                "`Grid_Ref` text," +
-                "`County` text," +
-                "`District` text," +
-                "`Ward` text," +
-                "`District_Code` text," +
-                "`Ward_Code` text," +
-                "`Country` text," +
-                "`County_Code` text," +
-                "`Constituency` text," +
-                "`Introduced` datetime," +
-                "`Dateterminated` datetime," + //changed from Terminated
-                "`Parish` text," +
-                "`National_Park` text," +
-                "`Population` int," +
-                "`Households` int," +
-                "`Built_Up_Area` text," +
-                "`Built_Up_Sub_Division` text," +
-                "`Lower_Layer_Super_Output_Area` text," +
-                "`Rural_Urban` text," +
-                "`Region` text," +
-                "`Altitude` int," +
-                "`London_Zone` int," +
-                "`LSOA_Code` text," +
-                "`Local_Authority` text," +
-                "`MSOA_Code` text," +
-                "`Middle_Layer_Super_Output_Area` text," +
-                "`Parish_Code` text," +
-                "`Census_Output_Area` text," +
-                "`Constituency_Code` text," +
-                "`Index_Of_Multiple_Deprivation` int," +
-                "`Quality` int," +
-                "`User_Type` int," +
-                "`Last_Updated` datetime," +
-                "`Nearest_Station` text," +
-                "`Distance_To_Station` decimal(12,9)," +
-                "`Postcode_Area` text," +
-                "`Postcode_District` text," +
-                "`Police_Force` text," +
-                "`Water_Company` text," +
-                "`Plus_Code` text," +
-                "PRIMARY KEY(`PostCode`)" +
-                ");";
+                    string cretble = "CREATE TABLE `postcodetransfer`.`testpostcodetransfer` (" +
+                    "PostCode nvarchar(20) NOT NULL," +
+                    "`In_Use` bit," +
+                    "`Latitude` decimal(12,9)," +
+                    "`Longitude` decimal(13,9)," +
+                    "`Easting` int," +
+                    "`Northing` int," +
+                    "`Grid_Ref` text," +
+                    "`County` text," +
+                    "`District` text," +
+                    "`Ward` text," +
+                    "`District_Code` text," +
+                    "`Ward_Code` text," +
+                    "`Country` text," +
+                    "`County_Code` text," +
+                    "`Constituency` text," +
+                    "`Introduced` datetime," +
+                    "`Dateterminated` datetime," + //changed from Terminated
+                    "`Parish` text," +
+                    "`National_Park` text," +
+                    "`Population` int," +
+                    "`Households` int," +
+                    "`Built_Up_Area` text," +
+                    "`Built_Up_Sub_Division` text," +
+                    "`Lower_Layer_Super_Output_Area` text," +
+                    "`Rural_Urban` text," +
+                    "`Region` text," +
+                    "`Altitude` int," +
+                    "`London_Zone` int," +
+                    "`LSOA_Code` text," +
+                    "`Local_Authority` text," +
+                    "`MSOA_Code` text," +
+                    "`Middle_Layer_Super_Output_Area` text," +
+                    "`Parish_Code` text," +
+                    "`Census_Output_Area` text," +
+                    "`Constituency_Code` text," +
+                    "`Index_Of_Multiple_Deprivation` int," +
+                    "`Quality` int," +
+                    "`User_Type` int," +
+                    "`Last_Updated` datetime," +
+                    "`Nearest_Station` text," +
+                    "`Distance_To_Station` decimal(12,9)," +
+                    "`Postcode_Area` text," +
+                    "`Postcode_District` text," +
+                    "`Police_Force` text," +
+                    "`Water_Company` text," +
+                    "`Plus_Code` text," +
+                    "PRIMARY KEY(`PostCode`)" +
+                    ");";
 
-                transferconn = new MySqlConnection(cs);
-                cmd = new MySqlCommand(cretble, transferconn);
-                transferconn.Open();
-                cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                transferconn.Close();
-                transferconn.Dispose();
+                    transferconn = new MySqlConnection(cs);
+                    cmd = new MySqlCommand(cretble, transferconn);
+                    transferconn.Open();
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                    transferconn.Close();
+                    transferconn.Dispose();
+
+                    if (!CheckBox3.Checked)
+                    {
+                        return;
+                    }
+                }
 
                 //read seq svr
+
+//                transferconn = new MySqlConnection(cs);
+//                cmd = new MySqlCommand(cretble, transferconn);
+//                transferconn.Open();
+//                cmd.ExecuteNonQuery();
+//                cmd.Dispose();
+//                transferconn.Close();
+//                transferconn.Dispose();
+
                 string CmdString = "INSERT INTO `testpostcodetransfer` (" +
                  "Postcode" +                                        //        00  ([Postcode]
                  ",In_Use" +                                          //        01  ,[In Use]
@@ -327,7 +321,7 @@ namespace startagain
 
                 SqlCommand inscommand = new SqlCommand();
                 inscommand.Connection = conn;
-                inscommand.CommandText = "SELECT TOP(1000) * FROM TotalPostcodes;";
+                inscommand.CommandText = "SELECT TOP(2000) * FROM TotalPostcodes;";
                 //inscommand.CommandText = "SELECT * FROM TotalPostcodes;";
 
                 conn.Open();
