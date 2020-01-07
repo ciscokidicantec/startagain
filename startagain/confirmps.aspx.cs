@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 using MySql.Data.MySqlClient;
 using System.IO;
-
+using System.Windows.Forms;
 
 //using System.Configuration;
 
@@ -31,6 +31,8 @@ namespace startagain
 
         protected void Button2_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Here We Go");              //Need using System.Windows.Forms as a reference;
+
             MySqlConnection transferconn;
 
             DateTime Startdate = DateTime.Now;
@@ -53,7 +55,7 @@ namespace startagain
 
                 //string cs = @"server=localhost;database=Postcodetransfer;userid=root;password=Coreldraw1$";
 
-                if(CheckBox1.Checked)
+                if (CheckBox1.Checked)
                 {
                     string createconnectiontext = ConfigurationManager.ConnectionStrings["mysqltransferstringdeletedatabase"].ConnectionString;
                     
@@ -157,15 +159,6 @@ namespace startagain
                 }
 
                 //read seq svr
-
-//                transferconn = new MySqlConnection(cs);
-//                cmd = new MySqlCommand(cretble, transferconn);
-//                transferconn.Open();
-//                cmd.ExecuteNonQuery();
-//                cmd.Dispose();
-//                transferconn.Close();
-//                transferconn.Dispose();
-
                 string CmdString = "INSERT INTO `testpostcodetransfer` (" +
                  "Postcode" +                                        //        00  ([Postcode]
                  ",In_Use" +                                          //        01  ,[In Use]
@@ -321,7 +314,7 @@ namespace startagain
 
                 SqlCommand inscommand = new SqlCommand();
                 inscommand.Connection = conn;
-                inscommand.CommandText = "SELECT TOP(2000) * FROM TotalPostcodes;";
+                inscommand.CommandText = "SELECT TOP(20) * FROM TotalPostcodes;";
                 //inscommand.CommandText = "SELECT * FROM TotalPostcodes;";
 
                 conn.Open();
@@ -543,6 +536,15 @@ namespace startagain
                 
                 //myConnection.Dispose();
             }
+        }
+
+        protected void Unnamed1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            Response.Write("Unnamed1_SelectedIndexChanged");
+            //GridView1.DataSource = SqlDataSource1;
+            //GridView1.DataBind();
+
         }
     }
 }
